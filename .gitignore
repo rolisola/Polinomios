@@ -1,0 +1,7 @@
+*.depend
+bin/*
+obj/*
+*.save
+exemplo/*
+.vscode
+saida
