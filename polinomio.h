@@ -16,28 +16,28 @@ typedef struct {
     Funções básicas do struct. Implementado em polinomio.c
 ------------------------------------------------------------------------------*/
 
-POLINOMIO new_polinomio(int n);
-POLINOMIO polinomio_from_file(char *filename);
-bool polinomio_is_null(POLINOMIO polinomio);
-void free_polinomio(POLINOMIO *polinomio);
-float valor_polinomio(POLINOMIO polinomio, float x);
-void print_polinomio(POLINOMIO polinomio);
+POLINOMIO criar_polinomio(int grau);
+POLINOMIO criar_polinomio_arquivo(char *nome_arquivo);
+bool verificar_polinomio_vazio(POLINOMIO polinomio);
+void liberar_polinomio(POLINOMIO *polinomio);
+float calcular_polinomio(POLINOMIO polinomio, float x);
+void imprimir_polinomio(POLINOMIO polinomio);
 
 /*------------------------------------------------------------------------------
     Soma, subtração e produto. Implementado em somasubprod.c
 ------------------------------------------------------------------------------*/
 
-POLINOMIO soma_polinomio(POLINOMIO p, POLINOMIO q);
-POLINOMIO sub_polinomio(POLINOMIO p, POLINOMIO q);
-POLINOMIO prod_polinomio(POLINOMIO p, POLINOMIO q);
+POLINOMIO somar_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2);
+POLINOMIO subtrair_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2);
+POLINOMIO multiplicar_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2);
 
 /*------------------------------------------------------------------------------
     Derivada e integral. Implementado em drv_int.c
 ------------------------------------------------------------------------------*/
 
-POLINOMIO deriva_polinomio(POLINOMIO p);
-POLINOMIO integra_polinomio(POLINOMIO p, float C);
-float integraldef_polinomio(POLINOMIO p, float a, float b);
+POLINOMIO derivar_polinomio(POLINOMIO polinomio);
+POLINOMIO integrar_polinomio(POLINOMIO polinomio, float C);
+float integraldef_polinomio(POLINOMIO polinomio, float a, float b);
 
 /*------------------------------------------------------------------------------
     Método de Newton-Raphson. Implementado em newraph.c

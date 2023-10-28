@@ -6,14 +6,23 @@
 #define MAXC 128
 
 int main() {
-    char filename[] = "poli1.txt";
+    char nome_arquivo[] = "poli1.txt";
+    char nome_arquivo2[] = "poli2.txt";
     POLINOMIO poli_1;
+    POLINOMIO poli_2;
     printf("Nome do arquivo do primeiro polinômio:\n");
-    // scanf("%s", filename);
+    // scanf("%s", nome_arquivo);
     // filename = "poli1.txt";
-    poli_1 = polinomio_from_file(filename);
-    print_polinomio(poli_1);
-    printf("\nResultado: %f\n",valor_polinomio(poli_1,10));
+    poli_1 = criar_polinomio_arquivo(nome_arquivo);
+    poli_2 = criar_polinomio_arquivo(nome_arquivo2);
+    imprimir_polinomio(poli_1);
+
+
+
+    imprimir_polinomio(poli_2);
+    //printf("\nResultado: %f\n",calcular_polinomio(poli_1,10));
+
+
     return 0;
 }
 
