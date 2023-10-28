@@ -1,45 +1,48 @@
+#ifndef POLINOMIO_H_INCLUDED
+#define POLINOMIO_H_INCLUDED
 
+#include <stdbool.h>
 /*
     Nessa implementação utilizamos um único cabeçalho para diversos arquivos de
-    implementação. 
+    implementação.
 */
 
-typedef struct
-{
-    float *coef; //ponteiro para alocação dos coeficientes
-    int n; //grau do polinômio
-} polinomio;
-
+typedef struct {
+    float *coeficientes; // ponteiro para alocação dos coeficientes
+    int grau;            // grau do polinômio
+} POLINOMIO;
 
 /*------------------------------------------------------------------------------
     Funções básicas do struct. Implementado em polinomio.c
 ------------------------------------------------------------------------------*/
 
-polinomio new_polinomio(int n);
-void free_polinomio(polinomio *p);
-bool polinomio_is_null(polinomio p);
-float valor_polinomio(polinomio p, float x);
-polinomio polinomio_from_file(char *filename);
-void print_polinomio(polinomio p);
+POLINOMIO new_polinomio(int n);
+POLINOMIO polinomio_from_file(char *filename);
+bool polinomio_is_null(POLINOMIO polinomio);
+void free_polinomio(POLINOMIO *polinomio);
+float valor_polinomio(POLINOMIO polinomio, float x);
+void print_polinomio(POLINOMIO polinomio);
 
 /*------------------------------------------------------------------------------
     Soma, subtração e produto. Implementado em somasubprod.c
 ------------------------------------------------------------------------------*/
 
-polinomio soma_polinomio(polinomio p, polinomio q);
-polinomio sub_polinomio(polinomio p, polinomio q);
-polinomio prod_polinomio(polinomio p, polinomio q);
+POLINOMIO soma_polinomio(POLINOMIO p, POLINOMIO q);
+POLINOMIO sub_polinomio(POLINOMIO p, POLINOMIO q);
+POLINOMIO prod_polinomio(POLINOMIO p, POLINOMIO q);
 
 /*------------------------------------------------------------------------------
     Derivada e integral. Implementado em drv_int.c
 ------------------------------------------------------------------------------*/
 
-polinomio deriva_polinomio(polinomio p);
-polinomio integra_polinomio(polinomio p, float C);
-float integraldef_polinomio(polinomio p, float a, float b);
+POLINOMIO deriva_polinomio(POLINOMIO p);
+POLINOMIO integra_polinomio(POLINOMIO p, float C);
+float integraldef_polinomio(POLINOMIO p, float a, float b);
 
 /*------------------------------------------------------------------------------
     Método de Newton-Raphson. Implementado em newraph.c
 ------------------------------------------------------------------------------*/
 
-float newton_raphson(polinomio p, float x_0, float epsilon, int t_max);
+float newton_raphson(POLINOMIO polinomio, float x_0, float epsilon, int t_max);
+
+#endif // POLINOMIO_H_INCLUDED
