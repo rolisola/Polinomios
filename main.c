@@ -69,6 +69,13 @@ int main() {
         exit(1);
     }
 
+    float limite_inferior=0, limite_superior=1;
+    printf("Digite os limites inferior e superio de integração: \n");
+    //scanf("%f", &limite_inferior);
+    //scanf("%f", &limite_superior);
+    printf("Valor da integral definida do primeiro polinômio: %f\n", integraldef_polinomio(poli_1,limite_inferior,limite_superior));
+    printf("Valor da integral definida do segundo polinômio: %f\n", integraldef_polinomio(poli_2,limite_inferior,limite_superior));
+    
 
 
     //printf("\nResultado: %f\n",calcular_polinomio(poli_1,10));
