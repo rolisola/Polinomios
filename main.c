@@ -12,7 +12,7 @@ int main() {
     char nome_arquivo2[] = "poli2.txt";
     POLINOMIO poli_1;
     POLINOMIO poli_2;
-    POLINOMIO derivada;
+    POLINOMIO auxiliar;
 
 
     printf("Nome do arquivo do primeiro polinômio:\n");
@@ -21,10 +21,10 @@ int main() {
     poli_1 = criar_polinomio_arquivo(nome_arquivo);
     printf("Primeiro polinômio:\n");
     imprimir_polinomio(poli_1);
-    derivada = derivar_polinomio(poli_1);
+    auxiliar = derivar_polinomio(poli_1);
     printf("Derivada do primeiro polinômio:\n");
-    imprimir_polinomio(derivada);
-    liberar_polinomio(&derivada);
+    imprimir_polinomio(auxiliar);
+    liberar_polinomio(&auxiliar);
 
 
     printf("Nome do arquivo do segundo polinômio:\n");
@@ -32,10 +32,42 @@ int main() {
     poli_2 = criar_polinomio_arquivo(nome_arquivo2);
     printf("Segundo polinômio:\n");
     imprimir_polinomio(poli_2);
-    derivada = derivar_polinomio(poli_2);
+    auxiliar = derivar_polinomio(poli_2);
     printf("Derivada do segundo polinômio:\n");
-    imprimir_polinomio(derivada);
-    liberar_polinomio(&derivada);
+    imprimir_polinomio(auxiliar);
+    liberar_polinomio(&auxiliar);
+    if(!verificar_polinomio_vazio(auxiliar)){
+        printf("Erro: polinômio não foi liberado!\n");
+        exit(1);
+    }
+    
+
+    printf("Soma dos polinômios:\n");
+    auxiliar = somar_polinomio(poli_1,poli_2);
+    imprimir_polinomio(auxiliar);
+    liberar_polinomio(&auxiliar);
+    if(!verificar_polinomio_vazio(auxiliar)){
+        printf("Erro: polinômio não foi liberado!\n");
+        exit(1);
+    }
+
+    printf("Subtração dos polinômios:\n");
+    auxiliar = subtrair_polinomio(poli_1,poli_2);
+    imprimir_polinomio(auxiliar);
+    liberar_polinomio(&auxiliar);
+    if(!verificar_polinomio_vazio(auxiliar)){
+        printf("Erro: polinômio não foi liberado!\n");
+        exit(1);
+    }
+
+    printf("Multiplicação dos polinômios:\n");
+    auxiliar = multiplicar_polinomio(poli_1,poli_2);
+    imprimir_polinomio(auxiliar);
+    liberar_polinomio(&auxiliar);
+    if(!verificar_polinomio_vazio(auxiliar)){
+        printf("Erro: polinômio não foi liberado!\n");
+        exit(1);
+    }
 
 
 
