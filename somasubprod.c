@@ -1,76 +1,79 @@
-#include "polinomio.h"
 #include <stdlib.h>
+#include "polinomio.h"
 
-POLINOMIO somar_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2) {
-    int grau_resultante;
+// Soma polinômios
+POLINOMIO polynomial_sum(POLINOMIO polynomial_1, POLINOMIO polynomial_2) {
+    int result_degree;
 
-    if (polinomio_1.grau > polinomio_2.grau) {
-        grau_resultante = polinomio_1.grau;
+    if (polynomial_1.degree > polynomial_2.degree) {
+        result_degree = polynomial_1.degree;
     } else {
-        grau_resultante = polinomio_2.grau;
+        result_degree = polynomial_2.degree;
     }
-    // grau_resultante = (polinomio_1.grau > polinomio_2.grau) ? polinomio_1.grau : polinomio_2.grau;
+    // result_degree = (polynomial_1.degree > polynomial_2.degree) ? polynomial_1.degree : polynomial_2.degree;
 
-    POLINOMIO polinomio_resultante = criar_polinomio(grau_resultante);
+    POLINOMIO polynomial_result = new_polynomial(result_degree);
 
-    for (int i = 0; i <= grau_resultante; i++) {
+    for (int i = 0; i <= result_degree; i++) {
 
-        polinomio_resultante.coeficientes[i] = 0;
+        polynomial_result.coefficients[i] = 0;
 
-        if (i <= polinomio_1.grau) {
-            polinomio_resultante.coeficientes[i] += polinomio_1.coeficientes[i];
+        if (i <= polynomial_1.degree) {
+            polynomial_result.coefficients[i] += polynomial_1.coefficients[i];
         }
-        if (i <= polinomio_2.grau) {
-            polinomio_resultante.coeficientes[i] += polinomio_2.coeficientes[i];
+        if (i <= polynomial_2.degree) {
+            polynomial_result.coefficients[i] += polynomial_2.coefficients[i];
         }
     }
 
-    return polinomio_resultante;
+    return polynomial_result;
 }
 
-POLINOMIO subtrair_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2) {
-    int grau_resultante;
+// Subtrai polinômios
+POLINOMIO polynomial_subtract(POLINOMIO polynomial_1, POLINOMIO polynomial_2) {
+    int result_degree;
 
-    if (polinomio_1.grau > polinomio_2.grau) {
-        grau_resultante = polinomio_1.grau;
+    if (polynomial_1.degree > polynomial_2.degree) {
+        result_degree = polynomial_1.degree;
     } else {
-        grau_resultante = polinomio_2.grau;
+        result_degree = polynomial_2.degree;
     }
-    // grau_resultante = (polinomio_1.grau > polinomio_2.grau) ? polinomio_1.grau : polinomio_2.grau;
+    // result_degree = (polynomial_1.degree > polynomial_2.degree) ? polynomial_1.degree : polynomial_2.degree;
 
-    POLINOMIO polinomio_resultante = criar_polinomio(grau_resultante);
-    if(polinomio_resultante.coeficientes==NULL){
+    POLINOMIO polynomial_result = new_polynomial(result_degree);
+    if (polynomial_result.coefficients == NULL) {
         exit(1);
     }
-    for (int i = 0; i <= grau_resultante; i++) {
+    for (int i = 0; i <= result_degree; i++) {
 
-        polinomio_resultante.coeficientes[i] = 0;
+        polynomial_result.coefficients[i] = 0;
 
-        if (i <= polinomio_1.grau) {
-            polinomio_resultante.coeficientes[i] += polinomio_1.coeficientes[i];
+        if (i <= polynomial_1.degree) {
+            polynomial_result.coefficients[i] += polynomial_1.coefficients[i];
         }
-        if (i <= polinomio_2.grau) {
-            polinomio_resultante.coeficientes[i] -= polinomio_2.coeficientes[i];
+        if (i <= polynomial_2.degree) {
+            polynomial_result.coefficients[i] -= polynomial_2.coefficients[i];
         }
     }
 
-    return polinomio_resultante;
+    return polynomial_result;
 }
 
-POLINOMIO multiplicar_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2) {
-    int grau_resultante;
-    grau_resultante = polinomio_1.grau + polinomio_2.grau;
+// Multiplica polinômios
+POLINOMIO polynomial_multiply(POLINOMIO polynomial_1, POLINOMIO polynomial_2) {
+    int result_degree;
+    result_degree = polynomial_1.degree + polynomial_2.degree;
 
-    POLINOMIO polinomio_resultante = criar_polinomio(grau_resultante);
+    POLINOMIO polynomial_result = new_polynomial(result_degree);
 
-    for (int i = 0; i <= polinomio_resultante.grau; i++) {
-        polinomio_resultante.coeficientes[i] = 0;
-        for (int j = 0; j <= polinomio_1.grau; j++) {
-            if (i - j >= 0 && i - j <= polinomio_2.grau) {
-                polinomio_resultante.coeficientes[i] += polinomio_1.coeficientes[j] * polinomio_2.coeficientes[i - j];
+    for (int i = 0; i <= polynomial_result.degree; i++) {
+        polynomial_result.coefficients[i] = 0;
+        for (int j = 0; j <= polynomial_1.degree; j++) {
+            if (i - j >= 0 && i - j <= polynomial_2.degree) {
+                polynomial_result.coefficients[i] += polynomial_1.coefficients[j] * polynomial_2.coefficients[i - j];
             }
         }
     }
 
-    return polinomio_resultante;
+    return polynomial_result;
 }

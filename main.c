@@ -7,134 +7,105 @@
 #define MAXC 128
 
 int main() {
-    setlocale(LC_ALL,"");
-    char nome_arquivo[] = "poli1.txt";
-    char nome_arquivo2[] = "poli3.txt";
+    setlocale(LC_ALL, "");
+    char filename[MAXC];
+    char filename_2[MAXC];
     POLINOMIO poli_1;
     POLINOMIO poli_2;
     POLINOMIO auxiliar;
 
-
+    // Bloco do primeiro arquivo
     printf("Nome do arquivo do primeiro polinômio:\n");
-    // scanf("%s", nome_arquivo);
-    // filename = "poli1.txt";
-    poli_1 = criar_polinomio_arquivo(nome_arquivo);
+    scanf("%s", filename);
+    poli_1 = new_polynomial_from_file(filename);
     printf("Primeiro polinômio:\n");
-    imprimir_polinomio(poli_1);
-    auxiliar = derivar_polinomio(poli_1);
+    polynomial_print(poli_1);
+    auxiliar = polynomial_derivate(poli_1);
     printf("Derivada do primeiro polinômio:\n");
-    imprimir_polinomio(auxiliar);
-    liberar_polinomio(&auxiliar);
+    polynomial_print(auxiliar);
+    polynomial_free(&auxiliar);
 
-
+    // Bloco do segundo arquivo
     printf("Nome do arquivo do segundo polinômio:\n");
-    // scanf("%s", nome_arquivo);
-    poli_2 = criar_polinomio_arquivo(nome_arquivo2);
+    scanf("%s", filename_2);
+    poli_2 = new_polynomial_from_file(filename_2);
     printf("Segundo polinômio:\n");
-    imprimir_polinomio(poli_2);
-    auxiliar = derivar_polinomio(poli_2);
+    polynomial_print(poli_2);
+    auxiliar = polynomial_derivate(poli_2);
     printf("Derivada do segundo polinômio:\n");
-    imprimir_polinomio(auxiliar);
-    liberar_polinomio(&auxiliar);
-    if(!verificar_polinomio_vazio(auxiliar)){
+    polynomial_print(auxiliar);
+    polynomial_free(&auxiliar);
+    if (!polynomial_is_null(auxiliar)) {
         printf("Erro: polinômio não foi liberado!\n");
         exit(1);
     }
 
-
+    // Bloco da soma
     printf("Soma dos polinômios:\n");
-    auxiliar = somar_polinomio(poli_1,poli_2);
-    imprimir_polinomio(auxiliar);
-    liberar_polinomio(&auxiliar);
-    if(!verificar_polinomio_vazio(auxiliar)){
+    auxiliar = polynomial_sum(poli_1, poli_2);
+    polynomial_print(auxiliar);
+    polynomial_free(&auxiliar);
+    if (!polynomial_is_null(auxiliar)) {
         printf("Erro: polinômio não foi liberado!\n");
         exit(1);
     }
 
+    // Bloco da subtração
     printf("Subtração dos polinômios:\n");
-    auxiliar = subtrair_polinomio(poli_1,poli_2);
-    imprimir_polinomio(auxiliar);
-    liberar_polinomio(&auxiliar);
-    if(!verificar_polinomio_vazio(auxiliar)){
+    auxiliar = polynomial_subtract(poli_1, poli_2);
+    polynomial_print(auxiliar);
+    polynomial_free(&auxiliar);
+    if (!polynomial_is_null(auxiliar)) {
         printf("Erro: polinômio não foi liberado!\n");
         exit(1);
     }
 
+    // Bloco da multiplicação
     printf("Multiplicação dos polinômios:\n");
-    auxiliar = multiplicar_polinomio(poli_1,poli_2);
-    imprimir_polinomio(auxiliar);
-    liberar_polinomio(&auxiliar);
-    if(!verificar_polinomio_vazio(auxiliar)){
+    auxiliar = polynomial_multiply(poli_1, poli_2);
+    polynomial_print(auxiliar);
+    polynomial_free(&auxiliar);
+    if (!polynomial_is_null(auxiliar)) {
         printf("Erro: polinômio não foi liberado!\n");
         exit(1);
     }
 
-    float limite_inferior=0, limite_superior=1;
-    printf("Digite os limites inferior e superio de integração: \n");
-    //scanf("%f", &limite_inferior);
-    //scanf("%f", &limite_superior);
-    printf("Valor da integral definida do primeiro polinômio: %f\n", integraldef_polinomio(poli_1,limite_inferior,limite_superior));
-    printf("Valor da integral definida do segundo polinômio: %f\n", integraldef_polinomio(poli_2,limite_inferior,limite_superior));
+    // Bloco da integral definida
+    float inferior_limit, upper_limit;
+    printf("Digite os limites inferior e superio de integração: ");
+    scanf("%f", &inferior_limit);
+    scanf("%f", &upper_limit);
+    printf("Valor da integral definida do primeiro polinômio: %f\n", polynomial_definite_integral(poli_1, inferior_limit, upper_limit));
+    printf("Valor da integral definida do segundo polinômio: %f\n", polynomial_definite_integral(poli_2, inferior_limit, upper_limit));
 
-    int iteracao_maxima;
+    // Bloco de Newton-Raphson
+    int max_iteration;
     float x, epsilon;
     printf("Digite os parâmetros para o método de Newton-Raphson:\n");
     printf("Valor inicial de x: ");
-    scanf("%f",&x);
+    scanf("%f", &x);
     printf("Valor da precisão numérica: ");
     scanf("%f", &epsilon);
     printf("Número máximo de iterações: ");
-    scanf("%d", &iteracao_maxima);
-    printf("\n\n");
-    printf("\nUma raíz do primeiro polinômio é (aproximadamente) %f\n", newton_raphson(poli_1,x,epsilon,iteracao_maxima));
-    printf("Uma raíz do segundo polinômio é (aproximadamente) %f\n", newton_raphson(poli_2,x,epsilon,iteracao_maxima));
+    do{
+        scanf("%d", &max_iteration);
+        printf("Número de iterações deve ser maior que 1. Tente novamente!!!\n");
 
-    //printf("\nResultado: %f\n",calcular_polinomio(poli_1,10));
+    }while(max_iteration<1);
+    printf("Uma raíz do primeiro polinômio é (aproximadamente) %f\n", newton_raphson(poli_1, x, epsilon, max_iteration));
+    printf("Uma raíz do segundo polinômio é (aproximadamente) %f\n", newton_raphson(poli_2, x, epsilon, max_iteration));
 
-    liberar_polinomio(&poli_1);
-    if(!verificar_polinomio_vazio(poli_1)){
+    // Bloco da limpeza da memória
+    polynomial_free(&poli_1);
+    if (!polynomial_is_null(poli_1)) {
         printf("Erro: polinômio não foi liberado!\n");
         exit(1);
     }
-    liberar_polinomio(&poli_2);
-    if(!verificar_polinomio_vazio(poli_2)){
+    polynomial_free(&poli_2);
+    if (!polynomial_is_null(poli_2)) {
         printf("Erro: polinômio não foi liberado!\n");
         exit(1);
     }
 
     return 0;
 }
-
-/*
-    printf("%s\n", filename);
-    file_pointer = fopen(filename,"r");
-    if(file_pointer == NULL){
-        printf("Erro ao abrir arquivo!\n");
-        exit(1);
-    }
-    if(1){
-    for(int i=0;i<5;i++){
-        fscanf(file_pointer,"%f",&vetor[i]);
-    }
-    for(int i=0;i<5;i++){
-        printf("%f\n",vetor[i]);
-    }
-    printf("%ld",ftell(file_pointer));
-}
-
-    fseek(file_pointer,0,SEEK_SET);
-
-    while(!feof(file_pointer)){
-        float temp;
-        fscanf(file_pointer, "%f", &temp);
-        tamanho++;
-
-        //printf("%f",temp);
-    }
-    vetor = malloc(tamanho*sizeof(float));
-    for(int i=0; i<= sizeof(vetor)/sizeof(vetor[0]);i++){
-        fscanf(file_pointer,"%l", vetor[i]);
-        printf("%f\n", vetor[i]);
-    }
-    printf("\n%ld",ftell(file_pointer));
-*/

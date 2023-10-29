@@ -4,125 +4,93 @@
 #include <math.h>
 #include "polinomio.h"
 
-POLINOMIO criar_polinomio(int grau) {
-    POLINOMIO polinomio;
+// Cria polinômio a partir do grau recebido
+POLINOMIO new_polynomial(int degree) {
+    POLINOMIO polynomial;
 
-    polinomio.grau = grau;
-    polinomio.coeficientes = (float *)malloc((grau + 1) * sizeof(float));
-    /*for(int i=0;i<=grau;i++){
-        polinomio.coeficientes[i]=i;
-        printf("%f\n",polinomio.coeficientes[i]);
-    }
-    printf("grau%d\n",grau);
-    int len = sizeof(polinomio.coeficientes)/sizeof(polinomio.coeficientes[0]);
-    printf("sizeof%d\n", sizeof(polinomio.coeficientes));
-    printf("size%f\n", len);*/
-    return polinomio;
+    polynomial.degree = degree;
+    polynomial.coefficients = (float *)malloc((degree + 1) * sizeof(float));
+    return polynomial;
 }
 
-POLINOMIO criar_polinomio_arquivo(char *nome_arquivo) {
-    FILE *ponteiro_arquivo = NULL;
-    float coeficiente = 0;
-    int grau = -1;// inicializa em -1 para contar o x^0 na determinação do grau do polinômio
+// Cria polinômio a partir do arquivo recebido
+POLINOMIO new_polynomial_from_file(char *filename) {
+    FILE *file_pointer = NULL;
+    float coefficient = 0;
+    int degree = -1; // inicializa em -1 por conta do x^0 na determinação do grau do polinômio
 
-    ponteiro_arquivo = fopen(nome_arquivo, "r");
-
-    if (ponteiro_arquivo == NULL) {
-        printf("Erro ao abrir arquivo!\n");
-        exit(1);
+    // Tratamento de incompetência de usuário
+    file_pointer = fopen(filename, "r");
+    while (file_pointer == NULL) {
+        printf("Arquivo não encontrado. Tente novamente!\n");
+        scanf("%s", filename);
+        file_pointer = fopen(filename, "r");
     }
 
-    while (!feof(ponteiro_arquivo)) {
-        if (fscanf(ponteiro_arquivo, "%f", &coeficiente) == 1) {
-            grau++;
+    // Realiza leitura para contagem do grau do polinômio
+    while (!feof(file_pointer)) {
+        if (fscanf(file_pointer, "%f", &coefficient) == 1) {
+            degree++;
         } else {
-            printf("Erro ao ler valor!\n");
+            printf("Erro ao ler valor, valor inválido!\n");
             exit(1);
         }
     }
 
-    POLINOMIO polinomio = criar_polinomio(grau);
+    POLINOMIO polynomial = new_polynomial(degree);
 
-    fseek(ponteiro_arquivo, 0, SEEK_SET);
+    fseek(file_pointer, 0, SEEK_SET);
 
-    for (int i = 0; i <= polinomio.grau; i++) {
-        // printf("yyyyyyyyyyy\n");
-        if (fscanf(ponteiro_arquivo, "%f", &polinomio.coeficientes[i]) == 1) {
-            // printf("i: %d\n",i);
-            // printf("coef: %f\n", polinomio.coeficientes[i]);
+    // Realiza leitura para atribuição de valores
+    for (int i = 0; i <= polynomial.degree; i++) {
+        if (fscanf(file_pointer, "%f", &polynomial.coefficients[i]) == 1) {
         } else {
             printf("Erro ao atribuir valor!\n");
             exit(1);
         }
     }
 
-    /*if (verificar_polinomio_vazio(polinomio)) {
-        printf("Polinomio esta vazio!\n");
-        exit(1);
-    }else{
-        printf("Polinomio nao esta vazio!\n");
-    }
+    fclose(file_pointer);
 
-
-    for(int i = 0; i < grau; i++){
-        printf("%f\n", polinomio.coeficientes[i]);
-    }
-        swhile(!foef(ponteiro_arquivo)){
-        if(fscanf(ponteiro_arquivo, "%f", polinomio.coeficientes[i]) == 1){
-        }else{
-            printf("Erro ao ler valor!\n");
-            exit(1);
-        }
-    }*/
-
-    // polinomio.coeficientes = coeficientes;
-    fclose(ponteiro_arquivo);
-
-    return polinomio;
+    return polynomial;
 }
 
-bool verificar_polinomio_vazio(POLINOMIO polinomio) {
-    /*if(polinomio.coeficientes == NULL || polinomio.grau == 0){
+// Verifica se o polinômio está vazio
+bool polynomial_is_null(POLINOMIO polynomial) {
+    /*if(polynomial.coefficients == NULL || polynomial.degree == 0){
         return true;
     } else {
         return false;
     }*/
-    return (polinomio.coeficientes == NULL || polinomio.grau == 0);
+    return (polynomial.coefficients == NULL || polynomial.degree == 0);
 }
 
-void liberar_polinomio(POLINOMIO *polinomio) {
-    free(polinomio->coeficientes);
-    polinomio->grau = 0;
+// Libera alocação do polinômio
+void polynomial_free(POLINOMIO *polynomial) {
+    free(polynomial->coefficients);
+    polynomial->degree = 0;
 }
 
-/*double potencia(double base, int expoente) {
-    if (expoente == 0) {
-        return 1;
-    } else if (expoente > 0) {
-        return base * potencia(base, expoente - 1);
-    } else {
-        return 1 / (base * potencia(base, -expoente - 1));
-    }
-}*/
-
-float calcular_polinomio(POLINOMIO polinomio, float x) {
-    if(verificar_polinomio_vazio(polinomio)){
-        printf("Polinomio vazio!\n");
+// Calcula resultado do polinômio por x
+float polynomial_result(POLINOMIO polynomial, float x) {
+    if (polynomial_is_null(polynomial)) {
+        printf("Polinômio vazio!\n");
         exit(1);
     }
 
-    float resultado = polinomio.coeficientes[0];
-    for(int i = 1; i <= polinomio.grau; i++){
-        resultado = resultado + polinomio.coeficientes[i] * pow(x, i);
+    float result = polynomial.coefficients[0];
+    for (int i = 1; i <= polynomial.degree; i++) {
+        result = result + polynomial.coefficients[i] * pow(x, i);
     }
 
-    return resultado;
+    return result;
 }
 
-void imprimir_polinomio(POLINOMIO polinomio) {
-    printf("p(x) = (%.2f)", polinomio.coeficientes[0]);
-    for (int i = 1; i <= polinomio.grau; i++) {
-        printf("+(%.2f)x^%d", polinomio.coeficientes[i], i);
+// Imprime polinômio
+void polynomial_print(POLINOMIO polynomial) {
+    printf("p(x) = (%.2f)", polynomial.coefficients[0]);
+    for (int i = 1; i <= polynomial.degree; i++) {
+        printf("+(%.2f)x^%d", polynomial.coefficients[i], i);
     }
     printf("\n");
 }

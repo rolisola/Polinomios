@@ -2,35 +2,36 @@
 #include <math.h>
 #include "polinomio.h"
 
-float newton_raphson(POLINOMIO polinomio, float x_0, float epsilon, int iteracao_maxima) {
-    POLINOMIO derivada = derivar_polinomio(polinomio);
-    int iteracao = 0;
+float newton_raphson(POLINOMIO polynomial, float x_0, float epsilon, int max_iteration) {
+    POLINOMIO derivated_polynomial = polynomial_derivate(polynomial);
+    int iteration = 0;
     float x = x_0;
-    float erro = epsilon + 1;
+    float error = epsilon + 1;
 
-    while (erro > epsilon && iteracao < iteracao_maxima) {
-        float f = calcular_polinomio(polinomio, x);
-        float f_derivada = calcular_polinomio(derivada, x);
+    while (error > epsilon && iteration < max_iteration) {
+        float f = polynomial_result(polynomial, x);
+        float f_derivated = polynomial_result(derivated_polynomial, x);
 
-        if (f_derivada == 0) {
+        if (f_derivated == 0) {
             printf("Divisão por 0\n");
-            liberar_polinomio(&derivada);
+            polynomial_free(&derivated_polynomial);
             return x;
         }
 
-        float proximo_x = x - f / f_derivada;
+        float next_x = x - f / f_derivated;
 
-        erro = fabs(proximo_x - x);
-        x = proximo_x;
-        iteracao++;
+        error = fabs(next_x - x);
+        x = next_x;
+        iteration++;
     }
 
-    liberar_polinomio(&derivada);
-    if(iteracao == iteracao_maxima){
-        printf("Raiz não obtida dentro de %d iterações, retornando lixo", iteracao);
+    polynomial_free(&derivated_polynomial);
+    
+    if (iteration == max_iteration) {
+        printf("Raiz não obtida dentro de %d iterações, retornando lixo.\n", iteration);
     }
-    if(iteracao != iteracao_maxima){
-        printf("Precisão em %d iterações.\n", iteracao);
+    if (iteration != max_iteration) {
+        printf("Precisão em %d iterações.\n", iteration);
     }
 
     return x;

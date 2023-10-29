@@ -8,41 +8,41 @@
 */
 
 typedef struct {
-    float *coeficientes; // ponteiro para alocação dos coeficientes
-    int grau;            // grau do polinômio
+    float *coefficients; // ponteiro para alocação dos coeficientes
+    int degree;            // grau do polinômio
 } POLINOMIO;
 
 /*------------------------------------------------------------------------------
     Funções básicas do struct. Implementado em polinomio.c
 ------------------------------------------------------------------------------*/
 
-POLINOMIO criar_polinomio(int grau);
-POLINOMIO criar_polinomio_arquivo(char *nome_arquivo);
-bool verificar_polinomio_vazio(POLINOMIO polinomio);
-void liberar_polinomio(POLINOMIO *polinomio);
-float calcular_polinomio(POLINOMIO polinomio, float x);
-void imprimir_polinomio(POLINOMIO polinomio);
+POLINOMIO new_polynomial(int degree);
+POLINOMIO new_polynomial_from_file(char *filename);
+bool polynomial_is_null(POLINOMIO polynomial);
+void polynomial_free(POLINOMIO *polynomial);
+float polynomial_result(POLINOMIO polynomial, float x);
+void polynomial_print(POLINOMIO polynomial);
 
 /*------------------------------------------------------------------------------
     Soma, subtração e produto. Implementado em somasubprod.c
 ------------------------------------------------------------------------------*/
 
-POLINOMIO somar_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2);
-POLINOMIO subtrair_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2);
-POLINOMIO multiplicar_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2);
+POLINOMIO polynomial_sum(POLINOMIO polynomial_1, POLINOMIO polynomial_2);
+POLINOMIO polynomial_subtract(POLINOMIO polynomial_1, POLINOMIO polynomial_2);
+POLINOMIO polynomial_multiply(POLINOMIO polynomial_1, POLINOMIO polynomial_2);
 
 /*------------------------------------------------------------------------------
     Derivada e integral. Implementado em drv_int.c
 ------------------------------------------------------------------------------*/
 
-POLINOMIO derivar_polinomio(POLINOMIO polinomio);
-POLINOMIO integrar_polinomio(POLINOMIO polinomio, float constante);
-float integraldef_polinomio(POLINOMIO polinomio, float limite_inferior, float limite_superior);
+POLINOMIO polynomial_derivate(POLINOMIO polynomial);
+POLINOMIO polynomial_integrate(POLINOMIO polynomial, float constant);
+float polynomial_definite_integral(POLINOMIO polynomial, float inferior_limit, float upper_limit);
 
 /*------------------------------------------------------------------------------
     Método de Newton-Raphson. Implementado em newraph.c
 ------------------------------------------------------------------------------*/
 
-float newton_raphson(POLINOMIO polinomio, float x_0, float epsilon, int iteracao_maxima);
+float newton_raphson(POLINOMIO polynomial, float x_0, float epsilon, int max_iteration);
 
 #endif // POLINOMIO_H_INCLUDED
