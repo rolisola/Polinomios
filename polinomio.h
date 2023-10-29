@@ -43,6 +43,6 @@ float integraldef_polinomio(POLINOMIO polinomio, float limite_inferior, float li
     Método de Newton-Raphson. Implementado em newraph.c
 ------------------------------------------------------------------------------*/
 
-float newton_raphson(POLINOMIO polinomio, float x_0, float epsilon, int t_max);
+float newton_raphson(POLINOMIO polinomio, float x_0, float epsilon, int iteracao_maxima);
 
 #endif // POLINOMIO_H_INCLUDED

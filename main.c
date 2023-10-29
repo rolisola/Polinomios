@@ -9,7 +9,7 @@
 int main() {
     setlocale(LC_ALL,"");
     char nome_arquivo[] = "poli1.txt";
-    char nome_arquivo2[] = "poli2.txt";
+    char nome_arquivo2[] = "poli3.txt";
     POLINOMIO poli_1;
     POLINOMIO poli_2;
     POLINOMIO auxiliar;
@@ -40,7 +40,7 @@ int main() {
         printf("Erro: polinômio não foi liberado!\n");
         exit(1);
     }
-    
+
 
     printf("Soma dos polinômios:\n");
     auxiliar = somar_polinomio(poli_1,poli_2);
@@ -75,11 +75,32 @@ int main() {
     //scanf("%f", &limite_superior);
     printf("Valor da integral definida do primeiro polinômio: %f\n", integraldef_polinomio(poli_1,limite_inferior,limite_superior));
     printf("Valor da integral definida do segundo polinômio: %f\n", integraldef_polinomio(poli_2,limite_inferior,limite_superior));
-    
 
+    int iteracao_maxima;
+    float x, epsilon;
+    printf("Digite os parâmetros para o método de Newton-Raphson:\n");
+    printf("Valor inicial de x: ");
+    scanf("%f",&x);
+    printf("Valor da precisão numérica: ");
+    scanf("%f", &epsilon);
+    printf("Número máximo de iterações: ");
+    scanf("%d", &iteracao_maxima);
+    printf("\n\n");
+    printf("\nUma raíz do primeiro polinômio é (aproximadamente) %f\n", newton_raphson(poli_1,x,epsilon,iteracao_maxima));
+    printf("Uma raíz do segundo polinômio é (aproximadamente) %f\n", newton_raphson(poli_2,x,epsilon,iteracao_maxima));
 
     //printf("\nResultado: %f\n",calcular_polinomio(poli_1,10));
 
+    liberar_polinomio(&poli_1);
+    if(!verificar_polinomio_vazio(poli_1)){
+        printf("Erro: polinômio não foi liberado!\n");
+        exit(1);
+    }
+    liberar_polinomio(&poli_2);
+    if(!verificar_polinomio_vazio(poli_2)){
+        printf("Erro: polinômio não foi liberado!\n");
+        exit(1);
+    }
 
     return 0;
 }
