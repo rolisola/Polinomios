@@ -1,25 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <locale.h>
 #include "polinomio.h"
 
 #define MAXC 128
 
 int main() {
+    setlocale(LC_ALL,"");
     char nome_arquivo[] = "poli1.txt";
     char nome_arquivo2[] = "poli2.txt";
     POLINOMIO poli_1;
     POLINOMIO poli_2;
+    POLINOMIO derivada;
+
+
     printf("Nome do arquivo do primeiro polinômio:\n");
     // scanf("%s", nome_arquivo);
     // filename = "poli1.txt";
     poli_1 = criar_polinomio_arquivo(nome_arquivo);
-    poli_2 = criar_polinomio_arquivo(nome_arquivo2);
+    printf("Primeiro polinômio:\n");
     imprimir_polinomio(poli_1);
+    derivada = derivar_polinomio(poli_1);
+    printf("Derivada do primeiro polinômio:\n");
+    imprimir_polinomio(derivada);
+    liberar_polinomio(&derivada);
 
 
-
+    printf("Nome do arquivo do segundo polinômio:\n");
+    // scanf("%s", nome_arquivo);
+    poli_2 = criar_polinomio_arquivo(nome_arquivo2);
+    printf("Segundo polinômio:\n");
     imprimir_polinomio(poli_2);
+    derivada = derivar_polinomio(poli_2);
+    printf("Derivada do segundo polinômio:\n");
+    imprimir_polinomio(derivada);
+    liberar_polinomio(&derivada);
+
+
+
     //printf("\nResultado: %f\n",calcular_polinomio(poli_1,10));
 
 

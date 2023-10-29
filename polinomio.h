@@ -36,8 +36,8 @@ POLINOMIO multiplicar_polinomio(POLINOMIO polinomio_1, POLINOMIO polinomio_2);
 ------------------------------------------------------------------------------*/
 
 POLINOMIO derivar_polinomio(POLINOMIO polinomio);
-POLINOMIO integrar_polinomio(POLINOMIO polinomio, float C);
-float integraldef_polinomio(POLINOMIO polinomio, float a, float b);
+POLINOMIO integrar_polinomio(POLINOMIO polinomio, float constante);
+float integraldef_polinomio(POLINOMIO polinomio, float limite_inferior, float limite_superior);
 
 /*------------------------------------------------------------------------------
     Método de Newton-Raphson. Implementado em newraph.c

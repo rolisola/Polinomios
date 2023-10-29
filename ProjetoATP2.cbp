@@ -31,7 +31,20 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="drv_int.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="newraph.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="polinomio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="polinomio.h" />
+		<Unit filename="somasubprod.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions />

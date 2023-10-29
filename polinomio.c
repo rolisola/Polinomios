@@ -1,8 +1,8 @@
-#include "polinomio.h"
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <math.h>
+#include "polinomio.h"
 
 POLINOMIO criar_polinomio(int grau) {
     POLINOMIO polinomio;
@@ -61,13 +61,13 @@ POLINOMIO criar_polinomio_arquivo(char *nome_arquivo) {
         exit(1);
     }else{
         printf("Polinomio nao esta vazio!\n");
-    }*/
+    }
 
-    /*
+
     for(int i = 0; i < grau; i++){
         printf("%f\n", polinomio.coeficientes[i]);
-    }*/
-    /*while(!foef(ponteiro_arquivo)){
+    }
+        swhile(!foef(ponteiro_arquivo)){
         if(fscanf(ponteiro_arquivo, "%f", polinomio.coeficientes[i]) == 1){
         }else{
             printf("Erro ao ler valor!\n");
@@ -76,6 +76,7 @@ POLINOMIO criar_polinomio_arquivo(char *nome_arquivo) {
     }*/
 
     // polinomio.coeficientes = coeficientes;
+    fclose(ponteiro_arquivo);
 
     return polinomio;
 }
@@ -94,7 +95,7 @@ void liberar_polinomio(POLINOMIO *polinomio) {
     polinomio->grau = 0;
 }
 
-double potencia(double base, int expoente) {
+/*double potencia(double base, int expoente) {
     if (expoente == 0) {
         return 1;
     } else if (expoente > 0) {
@@ -102,7 +103,7 @@ double potencia(double base, int expoente) {
     } else {
         return 1 / (base * potencia(base, -expoente - 1));
     }
-}
+}*/
 
 float calcular_polinomio(POLINOMIO polinomio, float x) {
     if(verificar_polinomio_vazio(polinomio)){
@@ -112,16 +113,16 @@ float calcular_polinomio(POLINOMIO polinomio, float x) {
 
     float resultado = polinomio.coeficientes[0];
     for(int i = 1; i <= polinomio.grau; i++){
-        resultado = resultado + polinomio.coeficientes[i] * potencia(x, i);
+        resultado = resultado + polinomio.coeficientes[i] * pow(x, i);
     }
 
     return resultado;
 }
 
 void imprimir_polinomio(POLINOMIO polinomio) {
-    printf("p(x) = (%f)", polinomio.coeficientes[0]);
+    printf("p(x) = (%.2f)", polinomio.coeficientes[0]);
     for (int i = 1; i <= polinomio.grau; i++) {
-        printf("+(%f)x^%d", polinomio.coeficientes[i], i);
+        printf("+(%.2f)x^%d", polinomio.coeficientes[i], i);
     }
     printf("\n");
 }

@@ -4,4 +4,5 @@ obj/*
 *.save
 exemplo/*
 .vscode
-saida
+*.exe
+*.layout
